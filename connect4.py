@@ -5,10 +5,31 @@
 
 SYMBOLS = [' ', 'X', 'O'] # blank, player, bot
 
+def generate_wins():
+    wins = []
+    # horizontal
+    for i in range(3):
+        for j in range(6):
+            wins.append(((i, j), (i+1, j), (i+2, j), (i+3, j)))
+    # vertical
+    for i in range(7):
+        for j in range(2):
+            wins.append(((i, j), (i, j+1), (i, j+2), (i, j+3)))
+    # diagonal \
+    for i in range(3):
+        for j in range(2):
+            wins.append(((i, j), (i+1, j+1), (i+2, j+2), (i+3, j+3)))
+    # diagonal /
+    for i in range(3):
+        for j in (5, 4):
+            wins.append(((i, j), (i+1, j-1), (i+2, j-2), (i+3, j-3)))
+    return wins
+
 class Connect4():
     def __init__(self):
         self.board: list[int][int] = [[0 for j in range(6)] for i in range(7)]
         self.winner: bool = False # True if the bot won else False
+        self.win_states: list[tuple[int]] = generate_wins()
     
     def reset(self):
         self.__init__()
@@ -31,7 +52,18 @@ class Connect4():
         print('o---------------------------o')
     
     def check_win(self):
-        return True
+        for w in self.win_states:
+            if self.board[w[0][0]][w[0][1]]!=0:
+                try:
+                    for i in (1, 2, 3):
+                        assert self.board[w[0][0]][w[0][1]]!=self.board[w[i][0]][w[i][1]]
+                    self.winner = self.board[w[0][0]][w[0][1]]==2
+                    return True
+                except AssertionError:
+                    pass
+        self.winner = None
+        return False
+
     
     def step(self, action, player):
         # action: column to drop piece
