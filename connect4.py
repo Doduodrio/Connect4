@@ -29,7 +29,8 @@ class Connect4():
         self.win_states = generate_wins()
     
     def reset(self):
-        self.__init__()
+        self.board = np.array([[0 for j in range(6)] for i in range(7)])
+        self.winner = False
         return self.board
     
     def print(self):
