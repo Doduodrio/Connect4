@@ -73,4 +73,4 @@ class Connect4():
         if self.check_win():
             return np.array([b for a in self.board for b in a]), (100 if self.winner else -100), True
         else:
-            return np.array([b for a in self.board for b in a]), 0, False
+            return np.array([b for a in self.board for b in a]), -1, False
