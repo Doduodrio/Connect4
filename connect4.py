@@ -1,7 +1,4 @@
-# requirements:
-# constructor to make new environment (default state?)
-# .reset() to reset environment to initial state
-# .print() to print the board state
+import numpy as np
 
 SYMBOLS = [' ', 'O', 'X'] # blank, bot, player
 
@@ -74,6 +71,6 @@ class Connect4():
                     self.board[action][row] = 1 if bot else 2
                     break
         if self.check_win():
-            return [b for a in self.board for b in a], (100 if self.winner else -100), True
+            return np.array([b for a in self.board for b in a]), (100 if self.winner else -100), True
         else:
-            return [b for a in self.board for b in a], 0, False
+            return np.array([b for a in self.board for b in a]), 0, False
