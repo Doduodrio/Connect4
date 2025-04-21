@@ -61,7 +61,7 @@ class Connect4():
                     return True
                 except AssertionError:
                     pass
-        self.winner = None
+        self.winner = False
         return False
 
     
