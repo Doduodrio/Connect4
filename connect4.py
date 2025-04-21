@@ -55,7 +55,7 @@ class Connect4():
             if self.board[w[0][0]][w[0][1]]!=0:
                 try:
                     for i in (1, 2, 3):
-                        assert self.board[w[0][0]][w[0][1]]!=self.board[w[i][0]][w[i][1]]
+                        assert self.board[w[0][0]][w[0][1]]==self.board[w[i][0]][w[i][1]]
                     self.winner = self.board[w[0][0]][w[0][1]]==1
                     return True
                 except AssertionError:
