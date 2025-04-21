@@ -31,7 +31,7 @@ class Connect4():
     def reset(self):
         self.board = np.array([[0 for j in range(6)] for i in range(7)])
         self.winner = False
-        return self.board
+        return np.array([b for a in self.board for b in a])
     
     def print(self):
         """
