@@ -51,6 +51,13 @@ class Connect4():
         print('o---------------------------o')
     
     def check_win(self):
+        try:
+            for i in range(7):
+                assert 0 not in self.board[i]
+            self.winner = False
+            return True
+        except AssertionError:
+            pass
         for w in self.win_states:
             if self.board[w[0][0]][w[0][1]]!=0:
                 try:
@@ -62,11 +69,16 @@ class Connect4():
                     pass
         self.winner = False
         return False
-
     
     def step(self, action, bot):
         # action: column to drop piece
         # bot: place bot piece if True, player piece if False
+        try:
+            for i in range(7):
+                assert 0 not in self.board[i]
+            return np.array([b for a in self.board for b in a]), -100, False
+        except AssertionError:
+            pass
         if 0 in self.board[action]:
             for row in range(5, -1, -1):
                 if self.board[action][row]==0:
