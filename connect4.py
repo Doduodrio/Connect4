@@ -3,25 +3,25 @@
 # .reset() to reset environment to initial state
 # .print() to print the board state
 
-SYMBOLS = [' ', 'X', 'O'] # blank, player, bot
+SYMBOLS = [' ', 'O', 'X'] # blank, bot, player
 
 def generate_wins():
     wins = []
     # horizontal
-    for i in range(3):
+    for i in range(4):
         for j in range(6):
             wins.append(((i, j), (i+1, j), (i+2, j), (i+3, j)))
     # vertical
     for i in range(7):
-        for j in range(2):
+        for j in range(3):
             wins.append(((i, j), (i, j+1), (i, j+2), (i, j+3)))
     # diagonal \
-    for i in range(3):
-        for j in range(2):
+    for i in range(4):
+        for j in range(3):
             wins.append(((i, j), (i+1, j+1), (i+2, j+2), (i+3, j+3)))
     # diagonal /
-    for i in range(3):
-        for j in (5, 4):
+    for i in range(4):
+        for j in (5, 4, 3):
             wins.append(((i, j), (i+1, j-1), (i+2, j-2), (i+3, j-3)))
     return wins
 
@@ -57,7 +57,7 @@ class Connect4():
                 try:
                     for i in (1, 2, 3):
                         assert self.board[w[0][0]][w[0][1]]!=self.board[w[i][0]][w[i][1]]
-                    self.winner = self.board[w[0][0]][w[0][1]]==2
+                    self.winner = self.board[w[0][0]][w[0][1]]==1
                     return True
                 except AssertionError:
                     pass
@@ -65,12 +65,15 @@ class Connect4():
         return False
 
     
-    def step(self, action, player):
+    def step(self, action, bot):
         # action: column to drop piece
-        # player: True if player else False
+        # bot: place bot piece if True, player piece if False
         if 0 in self.board[action]:
-            self.board[action][self.board[action].index(0)] = 2 if player else 1
+            for row in range(5, -1, -1):
+                if self.board[action][row]==0:
+                    self.board[action][row] = 1 if bot else 2
+                    break
         if self.check_win():
-            return self.board, 100 if self.winner else -100, True
+            return [b for a in self.board for b in a], (100 if self.winner else -100), True
         else:
-            return self.board, 0, False
+            return [b for a in self.board for b in a], 0, False
