@@ -24,9 +24,9 @@ def generate_wins():
 
 class Connect4():
     def __init__(self):
-        self.board: list[int][int] = [[0 for j in range(6)] for i in range(7)]
-        self.winner: bool = False # True if the bot won else False
-        self.win_states: list[tuple[int]] = generate_wins()
+        self.board = np.array([[0 for j in range(6)] for i in range(7)])
+        self.winner = False # True if the bot won else False
+        self.win_states = generate_wins()
     
     def reset(self):
         self.__init__()
@@ -74,3 +74,7 @@ class Connect4():
             return np.array([b for a in self.board for b in a]), (100 if self.winner else -100), True
         else:
             return np.array([b for a in self.board for b in a]), -1, False
+    
+    def reverse_board(self):
+        # return board state from perspective of player
+        return np.array([[(2 if self.board[i][j]==1 else 1 if self.board[i][j]==2 else 0) for j in range(6)] for i in range(7)])
