@@ -79,4 +79,5 @@ class Connect4():
     
     def reverse_board(self):
         # return board state from perspective of player
-        return np.array([[(2 if self.board[i][j]==1 else 1 if self.board[i][j]==2 else 0) for j in range(6)] for i in range(7)])
+        reversed = [[(2 if self.board[i][j]==1 else 1 if self.board[i][j]==2 else 0) for j in range(6)] for i in range(7)]
+        return np.array([b for a in reversed for b in a])
