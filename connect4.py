@@ -30,6 +30,7 @@ class Connect4():
     
     def reset(self):
         self.__init__()
+        return self.board
     
     def print(self):
         """
